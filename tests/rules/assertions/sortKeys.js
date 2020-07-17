@@ -438,6 +438,62 @@ export default {
         |}
       `,
     },
+    {
+      code: `
+        type FooType = {|
+          c: number,
+          b: number,
+          a: number,
+        |}
+
+        const Dummy = {
+          a: true
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "b" should be before "c".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "b".'},
+      ],
+      output: `
+        type FooType = {|
+          a: number,
+          b: number,
+          c: number,
+        |}
+
+        const Dummy = {
+          a: true
+        }
+      `,
+    },
+    {
+      code: `
+        type FooType = {|
+          c: number,
+          b: number,
+          a: number
+        |}
+
+        const Dummy = {
+          a: true
+        }
+      `,
+      errors: [
+        {message: 'Expected type annotations to be in ascending order. "b" should be before "c".'},
+        {message: 'Expected type annotations to be in ascending order. "a" should be before "b".'},
+      ],
+      output: `
+        type FooType = {|
+          a: number,
+          b: number,
+          c: number
+        |}
+
+        const Dummy = {
+          a: true
+        }
+      `,
+    },
     /* eslint-enable no-restricted-syntax */
   ],
   misconfigured: [
